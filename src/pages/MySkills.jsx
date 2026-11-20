@@ -1,0 +1,17 @@
+import React,{useMemo,useState} from 'react'
+import {Search,Plus,Trash2,Pencil,Check} from 'lucide-react'
+import {useApp} from '../context/AppContext'
+export default function MySkills(){
+ const {skills,setSkills,addActivity}=useApp(); const [search,setSearch]=useState(''),[category,setCategory]=useState('All'),[modal,setModal]=useState(false),[editing,setEditing]=useState(null)
+ const [form,setForm]=useState({name:'',category:'Programming Languages',level:'Beginner'})
+ const cats=['Programming Languages','Frontend Development','Backend Development','Database','Cloud','DevOps','Development Tools','Soft Skills']
+ const filtered=useMemo(()=>skills.filter(s=>(category==='All'||s.category===category)&&s.name.toLowerCase().includes(search.toLowerCase())),[skills,category,search])
+ const open=(skill=null)=>{setEditing(skill);setForm(skill?{...skill}:{name:'',category:'Programming Languages',level:'Beginner'});setModal(true)}
+ const save=e=>{e.preventDefault();if(!form.name.trim())return;if(editing)setSkills(skills.map(s=>s.name===editing.name?{...form,name:form.name.trim()}:s));else if(!skills.some(s=>s.name.toLowerCase()===form.name.trim().toLowerCase()))setSkills([...skills,{...form,name:form.name.trim()}]);addActivity(editing?'Skill updated':'Skill added');setModal(false)}
+ const remove=name=>{setSkills(skills.filter(s=>s.name!==name));addActivity('Skill removed')}
+ return <div><div className="page-heading"><div><span className="eyebrow">SKILL MANAGEMENT</span><h1>My Skills</h1><p>Manage and strengthen your technical profile.</p></div><button className="btn primary" onClick={()=>open()}><Plus/>Add skill</button></div>
+ <div className="toolbar"><div className="searchbox"><Search/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search skills..."/></div><select value={category} onChange={e=>setCategory(e.target.value)}><option>All</option>{cats.map(c=><option key={c}>{c}</option>)}</select></div>
+ <div className="skill-grid">{filtered.map(s=>{const pct={Beginner:25,Intermediate:50,Advanced:75,Expert:100}[s.level];return <article className="skill-card" key={s.name}><div className="skill-card-top"><span className="skill-logo">{s.name[0]}</span><div className="card-actions"><button onClick={()=>open(s)}><Pencil/></button><button onClick={()=>remove(s.name)}><Trash2/></button></div></div><h3>{s.name}</h3><small>{s.category}</small><div className="level-row"><span>{s.level}</span><b>{pct}%</b></div><div className="progress"><i style={{width:pct+'%'}}/></div></article>})}</div>
+ {modal&&<div className="modal-backdrop" onClick={()=>setModal(false)}><form className="modal" onSubmit={save} onClick={e=>e.stopPropagation()}><h2>{editing?'Edit skill':'Add a new skill'}</h2><label>Skill name<input value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></label><label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}>{cats.map(c=><option key={c}>{c}</option>)}</select></label><label>Proficiency<select value={form.level} onChange={e=>setForm({...form,level:e.target.value})}>{['Beginner','Intermediate','Advanced','Expert'].map(l=><option key={l}>{l}</option>)}</select></label><div className="modal-actions"><button type="button" className="btn secondary" onClick={()=>setModal(false)}>Cancel</button><button className="btn primary" type="submit"><Check/>Save skill</button></div></form></div>}
+ </div>
+}

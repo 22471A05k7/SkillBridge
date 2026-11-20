@@ -1,0 +1,8 @@
+export const assessmentQuestions = {
+  HTML:[{q:'Which element represents the main heading of a page?',o:['h1','main','header','title'],a:0,e:'The h1 element defines a primary page heading.'},{q:'Which attribute provides alternative text for an image?',o:['label','alt','src','title'],a:1,e:'The alt attribute describes an image.'}],
+  CSS:[{q:'Which property creates a grid layout?',o:['float','position','display','grid'],a:3,e:'display: grid enables grid layout.'},{q:'How do you make a breakpoint responsive?',o:['@media','@screen','@query','@resize'],a:0,e:'Media queries use @media.'}],
+  JavaScript:[{q:'Which keyword declares block-scoped mutable data?',o:['var','let','static','const'],a:1,e:'let declares block-scoped mutable variables.'},{q:'What does Array.map return?',o:['Nothing','A new array','A string','The same array'],a:1,e:'map creates a new array.'}],
+  React:[{q:'Which Hook stores component state?',o:['useEffect','useState','useRef','useMemo'],a:1,e:'useState stores state.'},{q:'Which API is used for component routing?',o:['useRoute','React Router','useLink','RouterHook'],a:1,e:'React Router handles navigation.'}],
+  Java:[{q:'Which keyword prevents class inheritance?',o:['static','final','private','sealed'],a:1,e:'final makes a class unable to inherit.'},{q:'Which collection does not allow duplicate values?',o:['List','Set','Queue','Array'],a:1,e:'Set contains unique values.'}],
+  SQL:[{q:'Which clause filters grouped rows?',o:['WHERE','HAVING','LIMIT','ORDER BY'],a:1,e:'HAVING filters aggregate groups.'},{q:'Which join returns matching rows from both tables?',o:['LEFT','RIGHT','INNER','FULL only'],a:2,e:'INNER JOIN returns matches from both.'}],
+}
